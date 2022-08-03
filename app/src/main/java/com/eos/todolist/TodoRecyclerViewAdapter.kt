@@ -9,7 +9,7 @@ import com.eos.todolist.db.TodoEntity;
 
 import java.util.ArrayList;
 
-class TodoRecyclerViewAdapter(private val todoList:ArrayList<TodoEntity>)
+class TodoRecyclerViewAdapter(private val todoList: ArrayList<TodoEntity>, private val listener: OnItemLongClickListener)
     :RecyclerView.Adapter<TodoRecyclerViewAdapter.MyViewHolder>(){
     inner
 
@@ -45,12 +45,16 @@ class TodoRecyclerViewAdapter(private val todoList:ArrayList<TodoEntity>)
             }
         }
 
-        holder.tv_importance.text = todoData.title
+        holder.tv_importance.text = todoData.importance.toString()
         holder.tv_title.text = todoData.title
+        holder.root.setOnLongClickListener{
+            listener.onLongClick(position)
+            true
+        }
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return todoList.size
     }
 
 }
